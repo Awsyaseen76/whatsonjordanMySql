@@ -102,54 +102,63 @@
         <div class="modal-body">
           <form id="registrationForm">
             <!-- Name -->
-            {{model.loggedMember.member}}
+            {{model.loggedMemberDetails}}
+            <div id="customeElements"></div>
+            {{model.test}}
+
+            <!-- with ng-repeat and ng-switch -->
+            <div>
+              <div ng-repeat="element in model.testCustomForm">
+                <div ng-switch="element.tag">
+                  <div ng-switch-when="input-text">
+                    <label>{{element.label}}</label>
+                    <input ng-model="model.test[element.key]" type="{{element.options.type}}" value="{{element.options.value}}">
+                  </div>
+                  <div ng-switch-when="select">
+                    <label>{{element.label}}</label>
+                    {{element.options}}
+                    <select id="selectTest" ng-model="model.test[element.key]" ng-options="option.value as option.text for option in element.options"></select>
+                  </div>
+                  <div ng-switch-when="input-checkbox">
+                    <label>{{element.label}}</label>
+                    <input ng-model="model.test[element.key]" type="{{element.options.type}}"">
+                  </div>
+                </div>
+              </div>
+            </div>
+              
+
             <div class="form-row">
                 <div class="form-group col-md-4">
                   <label for="firstName">First Name</label>
-                  <input type="text" class="form-control" id="firstName" placeholder="First Name" ng-model="model.loggedMember.member.firstName" disabled>
+                  <input type="text" class="form-control" id="firstName" placeholder="First Name" ng-model="model.loggedMemberDetails.contact.firstName" disabled>
                 </div>
                 <div class="form-group col-md-4">
                   <label for="middleName">Middle Name</label>
-                  <input type="text" class="form-control" id="middleName" placeholder="Middle Name" ng-model="model.loggedMember.member.middleName" disabled>
+                  <input type="text" class="form-control" id="middleName" placeholder="Middle Name" ng-model="model.loggedMemberDetails.contact.middleName" disabled>
                 </div>
                 <div class="form-group col-md-4">
                   <label for="lastName">Last Name</label>
-                  <input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="model.loggedMember.member.lastName" disabled>
+                  <input type="text" class="form-control" id="lastName" placeholder="Last Name" ng-model="model.loggedMemberDetails.contact.lastName" disabled>
                 </div>
             </div>
 
             <div class="form-row">
               <div class="form-group col-md-4">
                 <label for="gender">Gender</label>
-                <input type="text" id="gender" class="form-control" ng-model="model.loggedMember.member.gender" disabled>
+                <input type="text" id="gender" class="form-control" ng-model="model.loggedMemberDetails.contact.gender" disabled>
               </div>
               <div class="form-group col-md-4">
                 <label for="DOB">Date of birth</label>
-                <input type="date" class="form-control" id="DOB" placeholder="Date of birth" ng-model="model.loggedMember.member.DOB" disabled>
+                <input type="date" class="form-control" id="DOB" placeholder="Date of birth" ng-model="model.loggedMemberDetails.contact.DOB" disabled>
               </div>
               <div class="form-group col-md-4">
                 <label for="grade">Grade</label>
-                <input type="text" class="form-control" id="grade" placeholder="Grade" ng-model="model.loggedMember.member.grade.grade" disabled>
-                <!-- <select id="grade" class="form-control" ng-model="model.loggedMember.member.grade.grade">
-                  <option>KG1</option>
-                  <option>KG2</option>
-                  <option>1</option>
-                  <option>2</option>
-                  <option>3</option>
-                  <option>4</option>
-                  <option>5</option>
-                  <option>6</option>
-                  <option>7</option>
-                  <option>8</option>
-                  <option>9</option>
-                  <option>10</option>
-                  <option>11</option>
-                  <option>12</option>
-                  </select> -->
+                <input type="text" class="form-control" id="grade" placeholder="Grade" ng-model="model.loggedMemberDetails.contact.grade.grade" disabled>
               </div>
               <div class="form-group col-md-12">
                 <label for="school">School</label>
-                <input type="text" class="form-control" id="school" placeholder="School name..." ng-model="model.loggedMember.member.school.name" disabled>
+                <input type="text" class="form-control" id="school" placeholder="School name..." ng-model="model.loggedMemberDetails.contact.school.name" disabled>
               </div>
           </div>
 
@@ -168,26 +177,26 @@
           </div> -->
 
           <div class="form-row">
-            <div class="form-group col-md-12">
-            <label for="address">Address</label>
-            <!-- <input type="text" class="form-control" id="address" placeholder="Address" ng-model="model.loggedMember.address"> -->
-            Country: <input type="text" class="form-control" id="addressCountry" placeholder="Country"
-              ng-model="model.loggedMember.member.address.country" disabled>
-            Province: <input type="text" class="form-control" id="addressProvince" placeholder="Province"
-              ng-model="model.loggedMember.member.address.province" disabled>
-            City: <input type="text" class="form-control" id="addressCity" placeholder="City"
-              ng-model="model.loggedMember.member.address.city" disabled>
-            Street: <input type="text" class="form-control" id="addressStreet" placeholder="Street"
-              ng-model="model.loggedMember.member.address.street" disabled>
-            Building number: <input type="text" class="form-control" id="addressBuilding" placeholder="Building"
-              ng-model="model.loggedMember.member.address.building" disabled>
+            <div class="form-group col-md-12" ng-repeat="address in model.loggedMemberDetails.contact.addresses">
+              <label for="address">Address</label>
+              <!-- <input type="text" class="form-control" id="address" placeholder="Address" ng-model="model.loggedMember.address"> -->
+              Country: <input type="text" class="form-control" id="addressCountry" placeholder="Country"
+                ng-model="address.country" disabled>
+              Province: <input type="text" class="form-control" id="addressProvince" placeholder="Province"
+                ng-model="address.province" disabled>
+              City: <input type="text" class="form-control" id="addressCity" placeholder="City"
+                ng-model="address.city" disabled>
+              Street: <input type="text" class="form-control" id="addressStreet" placeholder="Street"
+                ng-model="address.street" disabled>
+              Building number: <input type="text" class="form-control" id="addressBuilding" placeholder="Building"
+                ng-model="address.building" disabled>
             </div>
           </div>
 
           <div class="form-row">
             <div class="form-group col-md-12">
             <label for="nationality">Nationality</label>
-            <input type="text" class="form-control" id="nationality" placeholder="Nationality" ng-model="model.loggedMember.member.nationality.nationality" disabled>
+            <input type="text" class="form-control" id="nationality" placeholder="Nationality" ng-model="model.loggedMemberDetails.contact.nationality.nationality" disabled>
             </div>
           </div>
 
@@ -200,20 +209,19 @@
           </div>
 
           <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="phone">Personal phone number</label>
-              <input type="text" id="phone" class="form-control" placeholder="Personal phone number"
-                ng-model="model.loggedMember.member.contact.phone" disabled>
+            <div class="form-group col-md-6" ng-repeat="phoneType in model.loggedMemberDetails.contact.phones">
+              <label for="phone">{{phoneType.type}}</label>
+              <input type="text" id="phone" class="form-control" ng-model="phoneType.number" disabled>
             </div>
           
-            <div class="form-group col-md-6">
+            <!-- <div class="form-group col-md-6">
               <label for="fatherPhone">Father phone number</label>
               <input type="text" id="fatherPhone" class="form-control" placeholder="Father phone number"
                 ng-model="model.loggedMember.member.contact.fatherPhone" disabled>
-            </div>
+            </div> -->
           </div>
           
-          <div class="form-row">
+          <!-- <div class="form-row">
           
             <div class="form-group col-md-6">
               <label for="motherPhone">Mother phone number</label>
@@ -226,16 +234,16 @@
               <input type="text" id="emergencyPhone" class="form-control" placeholder="Emergency phone number"
                 ng-model="model.loggedMember.member.contact.emergency" disabled>
             </div>
-          </div>
+          </div> -->
 
           <hr class="my-4">
 
-          <div class="form-row">
+          <!-- <div class="form-row">
             <div class="form-group col-md-12">
               <label for="notes">Notes:</label>
               <input type="text" class="form-control" id="notes" name="notes" placeholder="Notes..." ng-model="model.loggedMember.notes" disabled>
             </div>
-          </div>
+          </div> -->
 
           <hr class="my-4">
 
@@ -246,7 +254,7 @@
               <!-- <input type="checkbox"  name="termsAcceptance" id="termsAcceptance" required ng-model="model.loggedMember.termsAcceptance"> <label for="termsAcceptance">I read and agree the terms and conditions.</label> -->
               <br>
               <div class="form-check">
-                <input class="form-check-input" type="checkbox" value="" ng-model="model.loggedMember.termsAcceptance" id="termsAcceptance" name="termsAcceptance">
+                <input class="form-check-input" type="checkbox" value="" ng-model="model.loggedMemberDetails.termsAcceptance" id="termsAcceptance" name="termsAcceptance">
                 <label class="form-check-label" for="termsAcceptance">
                   I read and agree the terms and conditions.
                 </label>
@@ -256,7 +264,7 @@
           </div>
 
             <br>
-            <input type="submit" class="btn btn-success pull-right" name="register" ng-click="model.eventRegistration(model.eventDetails, model.loggedMember)" >
+            <input type="submit" class="btn btn-success pull-right" name="register" ng-click="model.eventRegistration(model.eventDetails, model.loggedMemberDetails)" >
           </form>
           <br>
         </div>

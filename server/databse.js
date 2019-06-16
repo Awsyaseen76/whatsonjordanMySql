@@ -59,6 +59,8 @@ db.Feedback = require('./models/feedback.model');
 db.Expense = require('./models/expense.model');
 db.ExpenseType = require('./models/expenseType.model');
 
+db.X_Member_Event = require('./models/x_member_event.model');
+
 
 
 /* ****************************************************
@@ -79,6 +81,7 @@ db.Contact.hasMany(db.MedicalIssue);
 
 // Event
 db.SubCategory.belongsTo(db.Category);
+// Each organizer has many events
 db.Contact.hasMany(db.Event);
 db.Event.belongsTo(db.Category);
 db.Event.belongsTo(db.SubCategory);
@@ -87,6 +90,8 @@ db.Event.belongsTo(db.Address);
 db.Address.belongsTo(db.GeoLocation);
 db.ProgramDetails.belongsTo(db.Event);
 
+db.Contact.belongsToMany(db.Event, {through: db.X_Member_Event});
+db.Event.belongsToMany(db.Contact, {through: db.X_Member_Event});
 
 
 

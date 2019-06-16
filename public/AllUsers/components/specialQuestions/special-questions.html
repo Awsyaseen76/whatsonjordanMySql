@@ -1,0 +1,21 @@
+<div class="container aws-margin10" ng-show="model.newEventSpecialRequest">
+    <div class="row">
+        <div class="col-12">
+            <h1>Program special questions:</h1>
+            <div class="form-group">
+                <form>
+                    <fieldset>
+                        <legend>Special questions:</legend>
+                        <div>
+                            <special-questions></special-questions>
+                        </div>
+                        <button type="button" name="createSpecials" class="btn btn-primary"
+                            ng-click="model.createEvent(model.newEvent)">Create</button>
+                        <button type="button" name="cancel2" class="btn btn-danger"
+                            ng-click="model.cancelCreate()">Cancel</button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

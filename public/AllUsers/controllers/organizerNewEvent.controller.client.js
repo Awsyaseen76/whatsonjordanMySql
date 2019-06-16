@@ -73,70 +73,7 @@
 									});	
 								});
 							});
-					
-				
-				
-				// getterService
-				// 	.getAllCategories()
-				// 	.then(function (categories) {
-				// 			model.allCategories = categories.data;
-				// 			getterService
-				// 				.getAllSubCategories()
-				// 				.then(function (subCategories) {
-				// 					model.allSubCategories = subCategories.data;
-				// 				})
-				// 		})
-				// 		.then(function(){
-				// 			getterService
-				// 				.getAllAgeGroups()
-				// 				.then(function(allAgeGroups){
-				// 					model.allAgeGroups = allAgeGroups.data;
-				// 				});
-				// 		})
-				// 		.then(function () {
-				// 			addressService
-				// 				.getOrganizerAddresses(organizerId)
-				// 				.then(function (allAddresses) {
-				// 					model.allAddresses = allAddresses.data;
-				// 				});
-				// 		})
-				// 		.then(function () {
-				// 			eventsService
-				// 				.getMapBoxKey()
-				// 				.then(function(mapBoxKey){
-				// 					model.mapBoxKey = mapBoxKey.data;
-			
-				// 					// MapBox Maps
-				// 					// Get the access token from the server
-				// 					mapboxgl.accessToken = model.mapBoxKey;
-				// 					$('#mapModal').on('shown.bs.modal', function() {
-				// 						// Initilise the map 
-				// 						var map = new mapboxgl.Map({
-				// 							container: 'mapForLocation',
-				// 							// style: 'mapbox://styles/mapbox/streets-v10',
-				// 							style: 'mapbox://styles/mapbox/satellite-streets-v9',
-				// 							center: [35.87741988743201, 32.003009804995955],
-				// 							// center: [model.position.currentposition.lng, model.position.currentposition.lat],
-				// 							zoom: 12
-				// 						});
-			
-				// 						// Show map controller
-				// 						map.addControl(new mapboxgl.NavigationControl());
-			
-				// 						// Get the location from the map
-				// 						map.on('click', function(e) {
-				// 							// var latitude = e.lngLat.lat;
-				// 							// var longitude = e.lngLat.lng;
-				// 							model.mapLocation.latitude = e.lngLat.lat;
-				// 							model.mapLocation.longitude = e.lngLat.lng;
-				// 							document.getElementById('mapLat').innerHTML = model.mapLocation.latitude;
-				// 							document.getElementById('mapLng').innerHTML = model.mapLocation.longitude;
-				// 						});
-			
-				// 					});	
-				// 				})
-				// 		})
-					
+
 			}
 			init();
 			
@@ -144,6 +81,7 @@
 			model.logout = logout;
 			model.cancelCreate = cancelCreate;
 			model.createEventDetails = createEventDetails;
+			model.createSpecialQuestions = createSpecialQuestions;
 			model.getCurrentLocation = getCurrentLocation;
 			model.getLocationFromMap = getLocationFromMap;
 			model.mapLocation = {longitude: 0, latitude: 0};
@@ -152,12 +90,28 @@
 			model.eventDays = []; // will hold the event days with details
 			model.days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // to create the daysOfWeek
 			model.daysOfWeek = {}; // will hold the days per week plus each day session time
+			model.addNewQuestion = addNewQuestion;
+			model.specialQuestions = [];
+			model.selectOptionsList = [0];
+
+			function createSpecialQuestions(newEvent){
+				model.newEventProgramDetails = false;
+				model.newEventSpecialQuestions = true;
+				console.log('the received event: ', newEvent);
+			}
+
+		function addNewQuestion(question){
+			console.log('the question is', question);
+			model.specialQuestions.push(question);
+			console.log('the questions list are: ', model.specialQuestions);
+			model.selectOptionsList = [0];
+		}
+
 
 			function selectAddress(){
 				model.addressSelected = true;
 				model.newAddressAdded = false;
 			}
-
 
 			function getCurrentLocation() {
 			    if (navigator.geolocation) {
@@ -233,6 +187,7 @@
 				newEvent.newAddressAdded = model.newAddressAdded;
 				newEvent.addressSelected = model.addressSelected;
 				newEvent.programDetails = [];
+				newEvent.specialQuestions = model.specialQuestions;
 				for(var i in model.eventDays){
 					newEvent.programDetails.push({
 						date: model.eventDays[i].date,

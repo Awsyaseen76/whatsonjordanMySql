@@ -15,7 +15,7 @@
 		this.logout = logout;
 		this.isOrganizer = isOrganizer;
 		this.isAdmin = isAdmin;
-		this.addEventToUser = addEventToUser;
+		this.addEventToMember = addEventToMember;
 		this.getMemberEvents = getMemberEvents;
 		this.removeRegisteredEvent = removeRegisteredEvent;
 		this.getAllUsers = getAllUsers;
@@ -119,9 +119,9 @@
 			return $http.get('/api/roles/getAllRoles');
 		}
 
-		function addEventToUser(eventID, memberId){
-			var parameters = { eventID: eventID, memberId: memberId};
-			var url = '/api/addEventToUser';
+		function addEventToMember(eventId, memberId, SQAnswer){
+			var parameters = { eventId: eventId, memberId: memberId, SQAnswer: SQAnswer};
+			var url = '/api/addEventToMember';
 				return $http.post(url, parameters);
 		}
 

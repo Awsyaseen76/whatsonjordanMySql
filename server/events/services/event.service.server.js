@@ -1,5 +1,5 @@
 var eventsDB = require('../events.model.server.js');
-
+var specialQGroups = require('../../AllUsers/specialQGroup.model.server')
 
 module.exports = function(app) {
 
@@ -234,13 +234,34 @@ module.exports = function(app) {
 			newEvent.geoLocation.longitude = JSON.stringify(newEvent.geoLocation.longitude);
 		}
 		// console.log('the event to create is: ', newEvent);
-		eventsDB
-			.addNewEvent(organizerId, newEvent)
-			.then(function(addedEvent){
-				console.log('the created event is: ', addedEvent);				
-				res.send(addedEvent);
-				return;
-			});
+		if (newEvent.specialQuestionsGroups){
+				return specialQGroups
+					.addGroup(newEvent.specialQuestionsGroups, organizerId)
+					.then(function(createdGroups){
+						console.log('the created groups: ', createdGroups);
+						// newEvent.main.specialQGroupsIds = createdGroups;
+						// console.log('the final event with groups: ', newEvent);
+						eventsDB
+							.addNewEvent(organizerId, newEvent, createdGroups)
+							.then(function (addedEvent) {
+								console.log('the created event is: ', addedEvent);
+								res.send(addedEvent);
+								return;
+							});
+					});
+					
+				
+			
+		}else{
+			eventsDB
+				.addNewEvent(organizerId, newEvent)
+				.then(function(addedEvent){
+					console.log('the created event is: ', addedEvent);				
+					res.send(addedEvent);
+					return;
+				});
+
+		}
 	}
 
 	function reNewEvent(req, res){

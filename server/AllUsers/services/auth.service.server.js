@@ -120,7 +120,7 @@ app.get('/api/getAuthRoles/:authId', getAuthRoles);
 app.get('/api/isOrganizer', isOrganizer);
 app.get('/api/admin/isAdmin', checkAdmin, isAdmin);
 app.post('/api/logout', logout);
-// app.post('/api/addEventToUser', addEventToUser);
+app.post('/api/addEventToMember', addEventToMember);
 // app.get('/api/getMemberEvents/:memberId', getMemberEvents);
 app.delete('/api/removeEventFromUser/:eventId', removeRegisteredEvent);
 
@@ -815,14 +815,24 @@ function isAdmin(req, res){
 }
 
 
-// function addEventToUser(req, res){
-// 	var parameters = req.body;
-// 	var eventID = parameters.eventID;
-// 	var memberId = parameters.memberId;
+function addEventToMember(req, res){
+	var parameters = req.body;
+	var eventId = parameters.eventId;
+	var memberId = parameters.memberId;
+	var SQAnswer = parameters.SQAnswer;
+
+	contactsDB
+		.addEventToMember(eventId, memberId, SQAnswer)
+		.then(function(result){
+			console.log('the result of add event to member: ', result);
+			res.send(result);
+		});
+
+// if the member update his profile by add some required field of his/her profile details
 // 	// authDB
 // 	// 	.updateProfile(userDetails)
 // 	// 		.then(function(updatedUser){
-// 				membersDB	
+// 				membersDB
 // 					.addEventToMember(eventID, memberId)
 // 						.then(function(result){
 // 							// eventsDB
@@ -835,7 +845,7 @@ function isAdmin(req, res){
 // 							res.send(result);
 // 						});
 // 			// });
-// 		// .addEventToUser(userId, eventId, userDetails)
+// 		// .addEventToMember(userId, eventId, userDetails)
 // 		// .then(function(user){
 // 		// 	eventsDB
 // 		// 		.addMemberToEvent(eventId, userId)
@@ -844,7 +854,7 @@ function isAdmin(req, res){
 // 		// 		});
 // 		// 	res.send(user);
 // 		// });
-// }
+}
 
 function getMemberEvents(req, res){
 	var memberId = req.params.memberId;

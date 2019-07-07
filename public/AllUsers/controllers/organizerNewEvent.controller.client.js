@@ -90,8 +90,8 @@
 			model.eventDays = []; // will hold the event days with details
 			model.days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]; // to create the daysOfWeek
 			model.daysOfWeek = {}; // will hold the days per week plus each day session time
-			model.addNewQuestion = addNewQuestion;
-			model.specialQuestions = [];
+			model.addNewQuestionGroup = addNewQuestionGroup;
+			model.specialQGroups = [];
 			model.selectOptionsList = [0];
 
 			function createSpecialQuestions(newEvent){
@@ -100,10 +100,15 @@
 				console.log('the received event: ', newEvent);
 			}
 
-		function addNewQuestion(question){
-			console.log('the question is', question);
-			model.specialQuestions.push(question);
-			console.log('the questions list are: ', model.specialQuestions);
+		function addNewQuestionGroup(questionsGroup){
+			console.log('the question is', questionsGroup);
+			// for (var i in questionsGroup.questions){
+			// 	if(!questionsGroup.questions[i].required){
+			// 		questionsGroup.questions[i].required = false;
+			// 	}
+			// }
+			model.specialQGroups.push(questionsGroup);
+			console.log('the questions groups list are: ', model.specialQGroups);
 			model.selectOptionsList = [0];
 		}
 
@@ -187,7 +192,7 @@
 				newEvent.newAddressAdded = model.newAddressAdded;
 				newEvent.addressSelected = model.addressSelected;
 				newEvent.programDetails = [];
-				newEvent.specialQuestions = model.specialQuestions;
+				newEvent.specialQuestionsGroups = model.specialQGroups;
 				for(var i in model.eventDays){
 					newEvent.programDetails.push({
 						date: model.eventDays[i].date,
@@ -196,7 +201,7 @@
 						title: model.eventDays[i].dailyDetails ? model.eventDays[i].dailyDetails.title : null,
 						details: model.eventDays[i].dailyDetails ? model.eventDays[i].dailyDetails.details : null,
 						videoLink: model.eventDays[i].dailyDetails ? model.eventDays[i].dailyDetails.videoLink : null,
-					})
+					});
 				}
 				
 				// newEvent.newGeoLocationAdded = model.newGeoLocationAdded;

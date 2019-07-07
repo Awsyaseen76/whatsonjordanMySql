@@ -619,3 +619,33 @@ remaining from user:
     notes: String,
     // additionalInfo: {}
 }, {collection: 'users'});
+
+
+
+
+Special questions:
+[x] Create SpecialQGroup table
+[x] Create SpecialQuestion table
+[x] SpecialQuestion.belongsTo(SpecialQGroup)
+[] when organizer create new event the last step is to add special questions:
+	1. Create a new questions group:
+		[x] Create Q-Group on the DB
+		[x] Create Questions on the DB also 
+		[x] Link each question with the Q-Group.
+		[] Add the Q-Group ID to the event so it will list the questions to the event.
+
+	2. Choose already added question group:
+		Store the Q-Group ID in the created event then it will list all the questions available for the selected group.
+
+[x] Member registration for event:
+	1. connect the member with the event through: 
+		event.addMember(member)
+		member.addEvent(event)
+	2. create a record of member special questions answers:
+		SQAnswersDB.create(answer)
+		then connect the answers with the X_Member_Event record:
+		X_Member_Event.addSQAnswer(answer)
+		
+
+	
+

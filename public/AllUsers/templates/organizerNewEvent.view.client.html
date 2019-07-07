@@ -313,97 +313,146 @@
 						<legend>Special questions:</legend>
 						<div>
 							<div class="form-row">
-								<a class="btn btn-warning" ng-click="questionToAdd={}" data-toggle="modal" data-target="#addQuestion" style="margin-left: 10px;">Add Question</a>
+								<a class="btn btn-warning" ng-click="groupToAdd={questions:[]}" data-toggle="modal" data-target="#addQuestionGroup" style="margin-left: 10px;">Add Question Group</a>
 							</div>
-							<!-- Add new question modal -->
-							<div class="modal fade" id="addQuestion" tabindex="-1" role="dialog" aria-labelledby="newQuestionModalTitle" aria-hidden="true">
+							<!-- Add new question group modal -->
+							<div class="modal fade" id="addQuestionGroup" tabindex="-1" role="dialog" aria-labelledby="newQuestionGroupModalTitle" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
 									<div class="modal-content">
 										<div class="modal-header">
-											<h5 class="modal-title" id="modalTitle">Add new question:</h5>
+											<h5 class="modal-title" id="modalTitle">Add new question group:</h5>
 											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 												<span aria-hidden="true">&times;</span>
 											</button>
 										</div>
 										<div class="modal-body">
 											<div class=" form-group">
-												<label>Question group: </label>
-												<input type="text" class="form-control" placeholder="Question group" ng-model="questionToAdd.group">
+												<label>Question group name: </label>
+												<input type="text" class="form-control" placeholder="Question group" ng-model="groupToAdd.title">
 											</div>
+											<div class="form-row">
+												<a class="btn btn-warning" data-toggle="modal" ng-click="newQuestion={}" data-target="#addQuestion" style="margin-left: 10px;">Add Question</a>
+											</div>
+											
+											{{groupToAdd}}
+											<br>
+										</div>
+										<div class="modal-footer">
+											<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+											<button type="button" class="btn btn-primary" ng-click="model.addNewQuestionGroup(groupToAdd)"
+												data-dismiss="modal">Add</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- / Add new question group modal -->
+
+
+
+							<!-- Add question to group modal -->
+							<div class="modal fade" id="addQuestion" tabindex="-1" role="dialog" aria-labelledby="newQuestionModalTitle"
+								aria-hidden="true">
+								<div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+									<div class="modal-content">
+										<div class="modal-header">
+											<h5 class="modal-title" id="QuestionModalTitle">Add new question:</h5>
+											<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+										</div>
+										<div class="modal-body">
 											<div class=" form-group">
 												<label>Question title: </label>
-												<input type="text" class="form-control" placeholder="Question title" ng-model="questionToAdd.title">
+												<input type="text" class="form-control" placeholder="Question title" ng-model="newQuestion.title">
+											</div>
+											<div class=" form-group">
+												<label>Required: </label>
+												<input type="checkbox" class="form-control" ng-model="newQuestion.required">
 											</div>
 											<div class="form-group">
 												<label>Select question type:</label>
 												<br>
 												<div class="custom-control custom-radio custom-control-inline">
-													<input type="radio" class="custom-control-input" id="textBoxInput1" name="textBoxInput1" value="textbox" ng-model="questionToAdd.type">
+													<input type="radio" class="custom-control-input" id="textBoxInput1" name="textBoxInput1"
+														value="textbox" ng-model="newQuestion.type">
 													<label class="custom-control-label" for="textBoxInput1">Text box</label>
 												</div>
-												
+							
 												<div class="custom-control custom-radio custom-control-inline">
-													<input type="radio" class="custom-control-input" id="selectFromList1" name="selectFromList1" value="select" ng-model="questionToAdd.type">
+													<input type="radio" class="custom-control-input" id="selectFromList1" name="selectFromList1"
+														value="select" ng-model="newQuestion.type">
 													<label class="custom-control-label" for="selectFromList1">Select from list</label>
 												</div>
-												
+							
 												<div class="custom-control custom-radio custom-control-inline">
-													<input type="radio" class="custom-control-input" id="checkBoxInput1" name="checkBoxInput1" value="checkbox" ng-model="questionToAdd.type">
+													<input type="radio" class="custom-control-input" id="checkBoxInput1" name="checkBoxInput1"
+														value="checkbox" ng-model="newQuestion.type">
 													<label class="custom-control-label" for="checkBoxInput1">checkbox</label>
 												</div>
 											</div>
-											<div ng-show="questionToAdd.type == 'select'">
+											<div ng-show="newQuestion.type == 'select'">
 												<p>Add the answer options:</p>
 												<div class="form-group">
-													<!-- {{questionToAdd.optionsList=[]}} -->
-													<!-- <div class="form-group" ng-show="questionToAdd.optionsList.length==0">
-														<label>Option value: </label>
-														<input type="text" class="form-control" placeholder="Option value" ng-model="questionToAdd.optionsList[0]">
-														{{questionToAdd.optionsList[0]}}
-													</div> -->
 													<div class="form-group" ng-repeat="option in model.selectOptionsList">
 														<label>Option {{$index+1}}</label>
-														<input type="text" class="form-control" placeholder="Option value" ng-model="questionToAdd.optionsList[$index]">
+														<input type="text" class="form-control" placeholder="Option value"
+															ng-model="newQuestion.options[$index]">
 													</div>
-													<button type="button" class="btn btn-primary" ng-click="model.selectOptionsList.push(model.selectOptionsList.length)">Add Option</button>
+													<button type="button" class="btn btn-primary"
+														ng-click="model.selectOptionsList.push(model.selectOptionsList.length)">Add Option</button>
 												</div>
 											</div>
 											<br>
 										</div>
 										<div class="modal-footer">
 											<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-											<button type="button" class="btn btn-primary" ng-click="model.addNewQuestion(questionToAdd)"
+											<button type="button" class="btn btn-primary" ng-click="groupToAdd.questions.push(newQuestion)"
 												data-dismiss="modal">Add</button>
 										</div>
 									</div>
 								</div>
 							</div>
-							<!-- / Add new question modal -->
-							<div class="form-row" ng-repeat="question in model.specialQuestions">
-								<div ng-switch="question.type" class="col-md-12">
-									<div class="form-row" ng-switch-when="textbox">
-										<a class="col-md-1" ng-click="model.specialQuestions.splice($index,1)"><i class="fa fa-times" style="cursor:pointer; color: red; margin-right:20px; " aria-hidden="true"></i></a>
-										<label class="col-md-3">{{question.title}}: </label>
-										<input class="col-md-7 form-control" type="{{question.type}}" style="margin-left:20px">
-									</div>
-									<div class="form-row" ng-switch-when="select">
-										<a class="col-md-1" ng-click="model.specialQuestions.splice($index,1)"><i class="fa fa-times" style="cursor:pointer; color: red; margin-right:20px; " aria-hidden="true"></i></a>
-										<label class="col-md-3">{{question.title}}: </label>
-										<select class="col-md-7" style="margin-left:20px" id="select{{$index}}" ng-model="question.value" ng-options="option[$index] as option for option in question.optionsList"></select>
-									</div>
-									<div class="form-row" ng-switch-when="checkbox">
-										<a class="col-md-1" ng-click="model.specialQuestions.splice($index,1)"><i class="fa fa-times" style="cursor:pointer; color: red; margin-right:20px; " aria-hidden="true"></i></a>
-										<label class="col-md-3">{{question.title}}</label>
-										<input class="col-md-7" type="{{question.type}}" style="margin-left:20px">
-									</div>
+							<!-- < /Add question to group modal> -->
+
+
+
+
+							<div class="form-row" ng-repeat="group in model.specialQGroups">
+								<div class="col-md-12">
+									<h3 >{{group.title}}</h3>
 								</div>
-								
-								<!-- <div class="form-group col-md-4">
-									<label for="qTitle">{{question}}</label>
-								</div> -->
-								<!-- <div class="form-group col-md-8">
-									<input type="text" name="qTitle" id="qTitle" placeholder="Question title">
-								</div> -->
+								<div ng-repeat="question in group.questions" class="col-md-12">
+									<div ng-switch="question.type" class="form-row">
+										<div class="col-md-12" ng-switch-when="textbox">
+											<div class="form-row">
+												<a class="col-md-1" ng-click="model.specialQuestions.splice($index,1)"><i class="fa fa-times" style="cursor:pointer; color: red; margin-right:20px; " aria-hidden="true"></i></a>
+												<label class="col-md-3">{{question.title}}: </label>
+												<input class="col-md-7 form-control" type="{{question.type}}" style="margin-left:20px">
+											</div>
+										</div>
+										<div class="col-md-12" ng-switch-when="select">
+											<div class="form-row">
+												<a class="col-md-1" ng-click="model.specialQuestions.splice($index,1)"><i class="fa fa-times" style="cursor:pointer; color: red; margin-right:20px; " aria-hidden="true"></i></a>
+												<label class="col-md-3">{{question.title}}: </label>
+												<select class="col-md-7" style="margin-left:20px" id="select{{$index}}" ng-model="question.value" ng-options="option[$index] as option for option in question.options"></select>
+											</div>
+										</div>
+										<div class="col-md-12" ng-switch-when="checkbox">
+											<div class="form-row">
+												<a class="col-md-1" ng-click="model.specialQuestions.splice($index,1)"><i class="fa fa-times" style="cursor:pointer; color: red; margin-right:20px; " aria-hidden="true"></i></a>
+												<label class="col-md-3">{{question.title}}</label>
+												<input class="col-md-7" type="{{question.type}}" style="margin-left:20px">
+											</div>
+										</div>
+									</div>
+									
+									<!-- <div class="form-group col-md-4">
+										<label for="qTitle">{{question}}</label>
+									</div> -->
+									<!-- <div class="form-group col-md-8">
+										<input type="text" name="qTitle" id="qTitle" placeholder="Question title">
+									</div> -->
+								</div>
 							</div>
 						</div>
 						<button type="button" name="createSpecials" class="btn btn-primary"

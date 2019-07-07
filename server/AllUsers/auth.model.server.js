@@ -36,7 +36,7 @@ authDB.findUserByEmail = findUserByEmail;
 // authDB.addEventId = addEventId;
 authDB.removeEventFromList = removeEventFromList;
 authDB.findUserByGoogleId = findUserByGoogleId;
-// authDB.addEventToUser = addEventToUser;
+// authDB.addEventToMember = addEventToMember;
 authDB.removeRegisteredEvent = removeRegisteredEvent;
 // authDB.addProfileImage = addProfileImage;
 authDB.addTokenToUser = addTokenToUser;
@@ -536,7 +536,7 @@ function findUserByEmail(userEmail){
 // 		});
 // }
 
-// function addEventToUser(userDetails, eventDetails){
+// function addEventToMember(userDetails, eventDetails){
 // 	return findUserById(userDetails.id)
 // 				.then(function(user){
 // 					user.addEvent(event);

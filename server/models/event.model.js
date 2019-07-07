@@ -46,6 +46,9 @@ var Events = db.sequelize.define('event', {
     special:{
         type: Sequelize.BOOLEAN
     },
+    // specialQGroupsIds:{
+    //   type: Sequelize.JSON
+    // },
     createdAt: {
       type: Sequelize.DATE,
       defaultValue: Sequelize.NOW

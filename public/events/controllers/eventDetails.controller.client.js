@@ -8,11 +8,14 @@
 
 			function init(){
 				model.error2 = null;
+				model.SQAnswer = {};
 				var eventId = $routeParams.eventId;
 				// var eventDetails = eventsService.findEventByEventId(eventId);
 				eventsService.findEventByEventId(eventId)
 					.then(function(eventDetails){
 						model.eventDetails = eventDetails;
+						console.log('the event details are: ', model.eventDetails);
+						
 					});
 				// check if there any user has already logged in to use it instead of the $rootScope
 				authService
@@ -35,6 +38,11 @@
 								}
 							}
 							// model.loggedMember.member.DOB = new Date(model.loggedMember.member.DOB);
+						}else{
+							model.error1 = 'Please login or sign-up to register on this event';
+							$('#eventRegistrationModal').modal('hide');
+							$('html, body').animate({ scrollTop: 0 }, 'slow');
+							return;
 						}
 					});
 				
@@ -84,32 +92,41 @@
 
 
 
-			function eventRegistration(event, user){
-				var eventId = event.id;
-				var memberId = user.member.id;
-				console.log('event name: ', event.name , ' user name:', user.member.firstName);
+			function eventRegistration(event, user, SQAnswer){
 				if (!model.loggedMember){
 					model.error1 = 'Please login or sign-up to register on this event';
 					$('#eventRegistrationModal').modal('hide');
 					$('html, body').animate({ scrollTop: 0 }, 'slow');
 					return;
 				} else {
-					var userId = model.loggedMember.id;
-					var eventsList = model.loggedMember.registeredEventsList;
-					for(var e in eventsList){
-						if(eventsList[e].id === event.id){
-							model.error2 = 'You already registered for this event';
-							return;
-						}
-					}
-					
-					authService
-						.addEventToUser(eventId, memberId)
-						.then(function (response){
-							$location.url('/memberProfile');
-					});
+					// var userId = model.loggedMember.id;
+					// var eventsList = model.loggedMember.registeredEventsList;
+					// for(var e in eventsList){
+					// 	if(eventsList[e].id === event.id){
+					// 		model.error2 = 'You already registered for this event';
+					// 		return;
+					// 	}
+					// }
+					var eventId = event.id;
+					var memberId = user.contact.id;
+					console.log('event name: ', event.name, 'user name:', user.contact.name);
+
+					// authService
+					// 	.addEventToMember(eventId, memberId, SQAnswer)
+					// 	.then(function (response){
+					// 		$location.url('/memberProfile');
+					// });
 					if(user.termsAcceptance){
 						$('#eventRegistrationModal').modal('hide');
+						console.log('the user: ', user);
+						console.log('the event: ', event);
+						console.log('the SQAnswer: ', SQAnswer);
+						authService
+							.addEventToMember(eventId, memberId, SQAnswer)
+							.then(function (response){
+								$location.url('/profile');
+								return;
+							});
 					}else{
 						$("#registrationForm").validate({
 						    rules: {

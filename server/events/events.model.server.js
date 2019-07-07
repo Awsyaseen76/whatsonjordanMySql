@@ -4,6 +4,8 @@ var db = require('../databse');
 // var Op = db.Sequelize.Op;
 
 var eventsDB = db.Event; // require('../models/event.model');
+var SQGroups = db.SpecialQGroup;
+var SQuestions = db.SpecialQuestion;
 var addressesDB = require('../AllUsers/addresses.model.server');
 var geoLocationsDB = require('../AllUsers/geoLocation.model.server');
 // var GeoLocation = require('../models/geoLocation.model');
@@ -68,7 +70,7 @@ event details:  { name: 'Event 1',
   programDailyDetails: { 'Sat Mar 02 2019': { title: 'Day 1', details: 'Day one details', videoLink: '' } } }
 */
 
-function addNewEvent(organizerId, event) {
+function addNewEvent(organizerId, event, SQGroups) {
 	console.log('organizerId: ', organizerId);
 	// event.main.categoryId = event.category.categoryId;
 	// event.main.subCategoryId = event.category.subCategoryId;
@@ -92,11 +94,21 @@ function addNewEvent(organizerId, event) {
 							return addressesDB
 									.createAddress(event.address)
 									.then(function(addedAddress){
-										programDetailsDB
+										return programDetailsDB
 											.addProgramDetails(addedEvent.id, event.programDetails)
 											.then(function(addedProgramDetails){
 												addedEvent.addressId = addedAddress.id;
-												return addedEvent.save();
+												return addedEvent
+													.save()
+													.then(function(theAddedEvent){
+														if (SQGroups) {
+															return Promise.all(SQGroups.map(function (group) {
+																return theAddedEvent.addSpecialQGroup(group);
+															}));
+														}else{
+															return addedEvent.save();
+														}
+													});
 											});
 									});				
 						});
@@ -104,7 +116,13 @@ function addNewEvent(organizerId, event) {
 				return programDetailsDB
 					.addProgramDetails(addedEvent.id, event.programDetails)
 					.then(function (addedProgramDetails) {
-						return addedEvent;
+						if (SQGroups) {
+							return Promise.all(SQGroups.map(function (group) {
+								return addedEvent.addSpecialQGroup(group);
+							}));
+						}else{
+							return addedEvent.save();
+						}
 					});
 			}
 		});
@@ -274,8 +292,12 @@ function findEventByEventId(eventId){
 				.find({
 					where: {id: eventId},
 					attributes: {exclude: ['createdAt', 'updatedAt', 'appropved', 'special']},
-					include: [{all:true}, {model: Address, include: [{all:true}]}]
-				})
+					include: [
+							{all:true}, 
+							{model: Address, include: [{all:true}]},
+							{model: SQGroups, include: [{ model: SQuestions}]}
+						]
+				}, {raw: true})
 				.then(function(event){
 					var foundEvent = event.get({plain: true});
 					return programDetailsDB

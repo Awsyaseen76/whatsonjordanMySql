@@ -58,8 +58,14 @@ db.AgeGroup = require('./models/ageGroup.model');
 db.Feedback = require('./models/feedback.model');
 db.Expense = require('./models/expense.model');
 db.ExpenseType = require('./models/expenseType.model');
+db.SpecialQGroup = require('./models/SpecialQGroup.model');
+db.SpecialQuestion = require('./models/SpecialQuestion.model');
 
+// member's event registration 
 db.X_Member_Event = require('./models/x_member_event.model');
+
+// hold the member's special question for each event
+db.SQAnswers = require('./models/sQAnswer');
 
 
 
@@ -90,8 +96,31 @@ db.Event.belongsTo(db.Address);
 db.Address.belongsTo(db.GeoLocation);
 db.ProgramDetails.belongsTo(db.Event);
 
+// connect questions with group
+// db.SpecialQuestion.belongsTo(db.SpecialQGroup);
+db.SpecialQGroup.hasMany(db.SpecialQuestion);
+
+// Members registered to events
 db.Contact.belongsToMany(db.Event, {through: db.X_Member_Event});
 db.Event.belongsToMany(db.Contact, {through: db.X_Member_Event});
+
+db.X_Member_Event.hasMany(db.SQAnswers);
+
+// when member register for an event 
+// connect the member with the event By: 
+	// contact.addEvent(event) 
+	// and
+	// event.addContact(contac)
+// create a SQAnswers table
+// create the SQAnswers table record and connect the record to the table X_Member_Event by:
+// createdLink.createSQAnswer(SQAnswersObject)
+// the table will containig the eventId, SQGroupId, SQuestionId and the answer value
+// db.
+
+
+// set special questio group to event
+db.Event.belongsToMany(db.SpecialQGroup, {through: 'Event_SQGroup'});
+
 
 
 

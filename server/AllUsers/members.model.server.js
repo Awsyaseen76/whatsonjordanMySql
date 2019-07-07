@@ -74,7 +74,7 @@ function updateMemberDetails(id, member){
 }
 
 
-function addEventToMember(eventID, memberId){
+function addEventToMember(eventID, memberId, SQAnswer){
     return membersDB
         .findById(memberId)
         .then(function(member){

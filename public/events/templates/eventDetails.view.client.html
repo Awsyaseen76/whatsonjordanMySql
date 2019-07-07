@@ -84,7 +84,7 @@
 	<br>
 
 	<!-- <a href="" class="btn btn-lg btn-success" ng-click="model.eventRegistration(model.eventDetails)">Register</a> -->
-	<button class="btn btn-lg btn-success" data-toggle="modal" data-target="#eventRegistrationModal"><b>Register</b></button>
+	<button class="btn btn-lg btn-success" data-toggle="modal" data-target="#eventRegistrationModal" ng-disabled="!model.loggedMember"><b>Register</b></button>
   <a href="#!/allEvents" class="btn btn-lg btn-danger">Cancel</a>
 
   <!-- Registration info -->
@@ -102,7 +102,6 @@
         <div class="modal-body">
           <form id="registrationForm">
             <!-- Name -->
-            {{model.loggedMemberDetails}}
             <div id="customeElements"></div>
             {{model.test}}
 
@@ -195,8 +194,8 @@
 
           <div class="form-row">
             <div class="form-group col-md-12">
-            <label for="nationality">Nationality</label>
-            <input type="text" class="form-control" id="nationality" placeholder="Nationality" ng-model="model.loggedMemberDetails.contact.nationality.nationality" disabled>
+              <label for="nationality">Nationality</label>
+              <input type="text" class="form-control" id="nationality" placeholder="Nationality" ng-model="model.loggedMemberDetails.contact.nationality.nationality" disabled>
             </div>
           </div>
 
@@ -236,6 +235,48 @@
             </div>
           </div> -->
 
+
+          <hr class="my-4">
+          <!-- {{model.eventDetails.specialQGroups}} -->
+          <div class="form-row">
+            <div class="form-group col-md-12" ng-repeat="QGroup in model.eventDetails.specialQGroups">
+              <h3 for="phone">{{QGroup.title}}</h3>
+              <div class="form-row">
+                <div class="form-group col-md-12" ng-repeat="question in QGroup.specialQuestions">
+                  <!-- switch between questions types -->
+                  <div ng-switch="question.type" class="form-row">
+                    <div class="col-md-12" ng-switch-when="textbox">
+                      <div class="form-row">
+                        <div class="col-md-12">
+                          <label>{{question.title}}: </label>
+                          <input class="form-control" type="{{question.type}}" ng-model="model.SQAnswer[question.id]">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" ng-switch-when="select">
+                      <div class="form-row">
+                        <div class="col-md-12">
+                          <label>{{question.title}}: </label>
+                          <select class="form-control" id="select{{$index}}" ng-options="option[$index] as option for option in question.options" ng-model="model.SQAnswer[question.id]"></select>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="col-md-12" ng-switch-when="checkbox">
+                      <div class="form-row">
+                        <div class="col-md-12">
+                          <label>{{question.title}}</label>
+                          <input class="form-control" type="{{question.type}}" ng-model="model.SQAnswer[question.id]">
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {{model.SQAnswer}}
+          <hr class="my-4">
+
           <hr class="my-4">
 
           <!-- <div class="form-row">
@@ -264,7 +305,7 @@
           </div>
 
             <br>
-            <input type="submit" class="btn btn-success pull-right" name="register" ng-click="model.eventRegistration(model.eventDetails, model.loggedMemberDetails)" >
+            <input type="submit" class="btn btn-success pull-right" name="register" ng-click="model.eventRegistration(model.eventDetails, model.loggedMemberDetails, model.SQAnswer)" >
           </form>
           <br>
         </div>

@@ -1,5 +1,8 @@
 var db = require('../databse');
-var contactsDB = db.Contact;  // require('../models/ageGroup.model');
+var contactsDB = db.Contact; 
+var eventsDB = db.Event;
+var SQAnswersDB = db.SQAnswers;
+var X_Member_Event = db.X_Member_Event;
 var Phone = db.Phone;
 var phonesDB = require('../AllUsers/phones.model.server');
 var addressesDB = require('../AllUsers/addresses.model.server');
@@ -12,6 +15,7 @@ module.exports = contactsDB;
 contactsDB.addNewContact = addNewContact;
 contactsDB.findContactsByAuthId = findContactsByAuthId;
 contactsDB.updateContact = updateContact;
+contactsDB.addEventToMember = addEventToMember;
 
 
 
@@ -70,4 +74,46 @@ function updateContact(contact, phone, removedMedical){
                                             });
                                     });
                 });
+}
+
+
+function addEventToMember(eventID, memberId, SQAnswer){
+    return contactsDB
+        .findById(memberId)
+        .then(function (contact) {
+            return eventsDB
+                .findById(eventID)
+                .then(function(event){
+                    return contact
+                        .addEvent(event)
+                        .then(function(result1){
+                            console.log('the contact.addEvent is: ', result1);
+                            return event
+                                .addContact(contact)
+                                .then(function(result2){
+                                    console.log('the event.addContact is: ', result2);
+                                    return X_Member_Event
+                                        .findOne({where: {contactId: memberId, eventID: eventID}})
+                                        .then(function(memEv){
+                                            console.log('the member event record', memEv);
+                                            // loop the answer create them then add the memEvId for each
+                                            return Promise.all(Object.keys(SQAnswer).map(function (key) {
+                                                return SQAnswersDB
+                                                    .create({ questionID: key, answer: SQAnswer[key]})
+                                                        .then(function(answer){
+                                                            return memEv.addSQAnswer(answer);
+                                                        });
+                                            })).then(function (result) {
+                                                console.log('the result of memEv.createSQAnswer', result);
+                                                return result;
+                                            });
+                                        });
+                                });
+                        });
+                });
+            // return member.addEvent(eventID)
+            //         .then(function(result){
+            //             console.log('the result after add event to contact', result);
+            //         });
+        });
 }

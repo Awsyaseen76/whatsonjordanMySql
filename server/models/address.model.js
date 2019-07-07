@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = require('../databse');
+var db = require('../database');
 
 var Address = db.sequelize.define('address', {
     country: {

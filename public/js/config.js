@@ -174,7 +174,7 @@
 		authService
 			.checkAuthLogin()
 			.then(function(user){
-				if(user === null){
+				if(!user){
 					deferred.reject();
 					$location.url('/login');
 				} else if (user.roles.length == 1 && user.roles[0].name == "Member"){

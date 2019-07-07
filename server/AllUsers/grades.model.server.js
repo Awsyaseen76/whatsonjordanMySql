@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var gradesDB = db.Grade;
 
 db.sequelize.sync();

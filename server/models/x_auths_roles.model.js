@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = require('../databse');
+var db = require('../database');
 var X_Auth_Role = db.sequelize.define('x_auth_role', {
     id: {
         type: Sequelize.UUID,

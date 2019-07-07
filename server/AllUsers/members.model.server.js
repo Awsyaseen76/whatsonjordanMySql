@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var membersDB = db.Member; 
 
 var addressesDB = require('./addresses.model.server');

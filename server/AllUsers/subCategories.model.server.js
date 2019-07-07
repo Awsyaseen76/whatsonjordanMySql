@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var subCategoriesDB = db.SubCategory; // require('../models/subCategory.model');
 
 db.sequelize.sync();

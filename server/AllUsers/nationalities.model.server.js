@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var nationalitiesDB = db.Nationality; //require('../models/nationality.model');
 
 db.sequelize.sync();

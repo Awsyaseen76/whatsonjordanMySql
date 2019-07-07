@@ -15,7 +15,10 @@
 			
 			model.memberProfile = loggedMember.chosenRole;
 			model.allRoles = loggedMember.allRoles;
-			// model.upcommingProgram = [];			
+			
+			model.registeredEventsList = loggedMember.chosenRole.contact.events;
+
+			model.upcommingProgram = [];			
 
 
 			// model.userFeedbacks = [];
@@ -27,20 +30,26 @@
 			// 		model.registeredEventsList = registeredEvents.data;
 					
 			// 		// get the upcomming daily program item
-			// 		for(var i in model.registeredEventsList){
+					for(var i in model.registeredEventsList){
 			// 			model.registeredEventsList[i].dailyDetails = JSON.parse(model.registeredEventsList[i].dailyDetails)
-			// 			inner: 
-			// 			for (var e in model.registeredEventsList[i].dailyDetails.programDailyDetails){
-			// 				if(new Date(e) >= new Date()){
+						inner: 
+						for (var e in model.registeredEventsList[i].programDetails){
+							var day = model.registeredEventsList[i].programDetails[e].date
+							console.log('the e is: ', new Date(day) >= new Date());
+							
+							if(new Date(day) >= new Date()){
 			// 					// var upcome = {}
-			// 					model.upcommingProgram.push({
-			// 												event: model.registeredEventsList[i].name, 
-			// 												date: new Date(e),
-			// 												programDetails: model.registeredEventsList[i].dailyDetails.programDailyDetails[e]});
-			// 					break inner;
-			// 				}
-			// 			}
-			// 		}
+								model.registeredEventsList[i].programDetails[e].eventName = model.registeredEventsList[i].name;
+								model.upcommingProgram.push(model.registeredEventsList[i].programDetails[e]);
+									// {
+			// 							event: model.registeredEventsList[i].name, 
+			// 							date: new Date(e),
+			// 							programDetails: model.registeredEventsList[i].dailyDetails.programDailyDetails[e]
+										// }
+								break inner;
+							}
+						}
+					}
 			// 	})
 			// 	.then(function(){
 			// 		authService

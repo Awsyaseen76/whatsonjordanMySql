@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var feedbacksDB = db.Feedback; // require('../models/feedback.model');
 var Event = db.Event; // require('../models/event.model');
 var Member = db.Member; // require('../models/member.model');

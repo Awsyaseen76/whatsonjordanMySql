@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var SpecialQGroup = db.SpecialQGroup;
 var SpecialQuestion = db.SpecialQuestion;
 db.sequelize.sync();

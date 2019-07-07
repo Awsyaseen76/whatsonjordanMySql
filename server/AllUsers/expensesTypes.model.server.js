@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var expenseTypeDB = db.ExpenseType; // require('../models/expenseType.model');
 
 db.sequelize.sync();

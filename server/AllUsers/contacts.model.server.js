@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var contactsDB = db.Contact; 
 var eventsDB = db.Event;
 var SQAnswersDB = db.SQAnswers;

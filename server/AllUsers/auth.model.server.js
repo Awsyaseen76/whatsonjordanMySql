@@ -3,7 +3,7 @@
 // var usersSchema = require('./users.schema.server.js');
 
 // var authDB = mongoose.model('authDB', usersSchema);
-var db = require('../databse');
+var db = require('../database');
 // console.log('the db object:', Object.keys(db));
 
 
@@ -11,6 +11,8 @@ var authDB = db.Auth; // require('../models/user.model');
 // var membersDB = require('./members.model.server');
 // var makersDB = require('./makers.model.server');
 var Contact = db.Contact; // require('../models/contact.model');
+var Event = db.Event;
+var ProgramDetails = db.ProgramDetails;
 var contactsDB = require('./contacts.model.server');
 var x_auth_role = db.X_Auth_Role;
 var Roles = db.Role;
@@ -62,7 +64,8 @@ function getAuthDetails(userId){
 			where: { id: userId },
 			attributes: { exclude: ['password', 'resetPasswordExpires', 'resetPasswordToken']},
 			include: [
-				{all: true}, {model:Contact, include:[{all:true}]}
+				{all: true}, 
+				{ model: Contact, include: [{ all: true }, {model: Event, include: [{all: true}]}]}
 			]
 			})
 		.then(function(user){
@@ -86,6 +89,7 @@ function getAuthDetails(userId){
 									plainUser.roles[i].contact.middleName = plainUser.roles[i].contact.name.split(' ')[1];
 									plainUser.roles[i].contact.lastName = plainUser.roles[i].contact.name.split(' ')[2];
 								}
+								
 							}//else{
 								//plainUser.roles[i].contact = foundContacts[i].get({ plain: true });
 							//}

@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = require('../databse');
+var db = require('../database');
 var X_Member_Event = db.sequelize.define('x_member_Event', {
     id: {
         type: Sequelize.UUID,

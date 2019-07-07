@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var medicalIssuesDB = db.MedicalIssue;
 
 db.sequelize.sync();

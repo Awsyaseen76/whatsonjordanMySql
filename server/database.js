@@ -94,7 +94,8 @@ db.Event.belongsTo(db.SubCategory);
 db.Event.belongsTo(db.AgeGroup);
 db.Event.belongsTo(db.Address);
 db.Address.belongsTo(db.GeoLocation);
-db.ProgramDetails.belongsTo(db.Event);
+// db.ProgramDetails.belongsTo(db.Event);
+db.Event.hasMany(db.ProgramDetails);
 
 // connect questions with group
 // db.SpecialQuestion.belongsTo(db.SpecialQGroup);

@@ -1,6 +1,6 @@
 // var mongoose = require('mongoose');
 // var eventsSchema = require('./events.schema.server.js');
-var db = require('../databse');
+var db = require('../database');
 // var Op = db.Sequelize.Op;
 
 var eventsDB = db.Event; // require('../models/event.model');

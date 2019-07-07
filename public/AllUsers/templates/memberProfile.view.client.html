@@ -90,19 +90,21 @@
 				<h2 class="poiret-font">Upcomming Program:</h2>
 				<div class="row mb-1" ng-show="model.upcommingProgram.length > 0" ng-repeat="program in model.upcommingProgram">
 			        <div class="col-md-12">
-			          <div class="card flex-md-row mb-4 box-shadow h-md-250" style="background-color: #F0F5EF">
+			          <div class="card mb-4 box-shadow h-md-250" style="background-color: #F0F5EF">
 			            <div class="card-body d-flex flex-column align-items-start">
-			              <h3 class="d-inline-block mb-2 text-warning">{{program.event}}:</h3>
-			              <h5 class="mb-0">{{program.programDetails.title}}</h5>
-			              <div class="mb-1 text-muted">{{program.date | date}}</div>
-			              <p class="card-text mb-auto">
-			              	{{program.programDetails.details}}
-			              </p>
-				        </div>
+			              <h3 class="d-inline-block mb-2 text-warning">{{program.eventName}}:</h3>
+			              <h5 class="mb-0">Title: {{program.title}}</h5>
+										<div class="mb-1 text-muted">Date: {{program.date | date}}</div>
+										<div class="text-muted">
+											Session start time: {{program.sessionStartTime | date:'HH:mma'}} - 
+											Session end time: {{program.sessionEndTime | date:'HH:mma'}}p>
+										</div>
+			              <p class="card-text mb-auto">Details: {{program.details}}</p>
+				        	</div>
 			            
 			            <div class="video-container">
-			            	<iframe width="400px;" height="100%" ng-src="{{model.trustedUrl(program.programDetails.videoLink)}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-			            </div>
+			            	<iframe width="400px;" height="100%" ng-src="{{model.trustedUrl(program.videoLink)}}" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+									</div>
 			          </div>
 			        </div>
 				</div>

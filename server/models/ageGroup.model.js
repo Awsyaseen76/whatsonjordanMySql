@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = require('../databse');
+var db = require('../database');
 
 var AgeGroup = db.sequelize.define('ageGroup', {
     name: {

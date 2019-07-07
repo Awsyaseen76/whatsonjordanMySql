@@ -43,11 +43,11 @@ require('./server/AllUsers/services/getterService.service.server')(app);
 // require('./server/AllUsers/ageGroups.service.server')(app);
 // require('./server/AllUsers/subCategories.service.server')(app);
 require('./server/AllUsers/services/address.service.server')(app);
-// require('./server/databse.js');
+// require('./server/database.js');
 // using the sequelize-cli
 // var db = require('./server/sequelize/models');
 
-var db = require('./server/databse.js');
+var db = require('./server/database.js');
 
 
 

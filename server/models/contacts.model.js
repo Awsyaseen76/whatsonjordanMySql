@@ -1,5 +1,5 @@
 var Sequelize = require('sequelize');
-var db = require('../databse');
+var db = require('../database');
 var Contacts = db.sequelize.define('contact', {
     id: {
         type: Sequelize.UUID,

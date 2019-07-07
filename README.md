@@ -646,6 +646,6 @@ Special questions:
 		then connect the answers with the X_Member_Event record:
 		X_Member_Event.addSQAnswer(answer)
 		
-
+[] list registered events on member profile
 	
 

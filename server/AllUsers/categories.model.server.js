@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var categoriesDB = db.Category; // require('../models/category.model');
 
 db.sequelize.sync();

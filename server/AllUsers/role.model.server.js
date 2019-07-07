@@ -1,5 +1,5 @@
 
-var db = require('../databse');
+var db = require('../database');
 // console.log('the db object:', Object.keys(db));
 var roleDB = db.Role;
 

@@ -1,4 +1,4 @@
-var db = require('../databse');
+var db = require('../database');
 var geoLocationDB = db.GeoLocation; //require('../models/geoLocation.model');
 
 db.sequelize.sync();

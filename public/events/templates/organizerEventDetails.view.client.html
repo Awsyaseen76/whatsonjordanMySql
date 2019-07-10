@@ -340,13 +340,13 @@
 			<th width="">Freeze member</th>
 			<th width="">Attend/Miss</th>
 		</thead>
-		<tr ng-repeat="user in model.eventDetails.registeredMembers | filter: searchMember">
-			<td>{{user.name.firstName}} {{user.name.lastName}}</td>
+		<tr ng-repeat="user in model.eventDetails.contacts | filter: searchMember">
+			<td>{{user.name}}</td>
 			<td>
-				{{model.getTotals(user, model.eventDetails._id).totalOfPayments | currency:"JOD "}}
+				{{model.getTotals(user, model.eventDetails.id).totalOfPayments | currency:"JOD "}}
 			</td>
 			<td>
-				{{model.getTotals(user, model.eventDetails._id).balance | currency:"JOD "}}
+				{{model.getTotals(user, model.eventDetails.id).balance | currency:"JOD "}}
 			</td>
 			
 			<!-- Discount Modal -->

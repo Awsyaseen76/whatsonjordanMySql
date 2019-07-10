@@ -72,6 +72,8 @@ event details:  { name: 'Event 1',
 
 function addNewEvent(organizerId, event, SQGroups) {
 	console.log('organizerId: ', organizerId);
+	console.log('event.main.contactId: ', event.main.contactId);
+	
 	// event.main.categoryId = event.category.categoryId;
 	// event.main.subCategoryId = event.category.subCategoryId;
 	// event.main.ageGroupId = event.age.ageGroup.id;

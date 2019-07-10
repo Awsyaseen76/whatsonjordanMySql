@@ -74,7 +74,7 @@
 		// model.removeRegisteredEvent = removeRegisteredEvent;
 		// model.totalPayments = totalPayments;
 		// model.attendedDays = attendedDays;
-		// model.trustedUrl = trustedUrl;
+		model.trustedUrl = trustedUrl;
 		// model.submitFeedback = submitFeedback;
 
 		// function submitFeedback(eventId, feedbackText){
@@ -90,12 +90,12 @@
 		// }
 
 
-		// function trustedUrl(videoLink){
-		// 	var youtubeUrl = "https://www.youtube.com/embed/";
-		// 	var urlParts = videoLink.split("/");
-		// 	youtubeUrl += urlParts[urlParts.length-1];
-		// 	return $sce.trustAsResourceUrl(youtubeUrl);
-		// }
+		function trustedUrl(videoLink){
+			var youtubeUrl = "https://www.youtube.com/embed/";
+			var urlParts = videoLink.split("/");
+			youtubeUrl += urlParts[urlParts.length-1];
+			return $sce.trustAsResourceUrl(youtubeUrl);
+		}
 
 		// function attendedDays(eventId){
 		// 	var attended = 0;

@@ -84,7 +84,7 @@
 	<br>
 
 	<!-- <a href="" class="btn btn-lg btn-success" ng-click="model.eventRegistration(model.eventDetails)">Register</a> -->
-	<button class="btn btn-lg btn-success" data-toggle="modal" data-target="#eventRegistrationModal" ng-disabled="!model.loggedMember"><b>Register</b></button>
+	<button class="btn btn-lg btn-success" data-toggle="modal" data-target="#eventRegistrationModal" ng-disabled="!model.loggedMember || model.error2"><b>Register</b></button>
   <a href="#!/allEvents" class="btn btn-lg btn-danger">Cancel</a>
 
   <!-- Registration info -->
@@ -102,31 +102,6 @@
         <div class="modal-body">
           <form id="registrationForm">
             <!-- Name -->
-            <div id="customeElements"></div>
-            {{model.test}}
-
-            <!-- with ng-repeat and ng-switch -->
-            <div>
-              <div ng-repeat="element in model.testCustomForm">
-                <div ng-switch="element.tag">
-                  <div ng-switch-when="input-text">
-                    <label>{{element.label}}</label>
-                    <input ng-model="model.test[element.key]" type="{{element.options.type}}" value="{{element.options.value}}">
-                  </div>
-                  <div ng-switch-when="select">
-                    <label>{{element.label}}</label>
-                    {{element.options}}
-                    <select id="selectTest" ng-model="model.test[element.key]" ng-options="option.value as option.text for option in element.options"></select>
-                  </div>
-                  <div ng-switch-when="input-checkbox">
-                    <label>{{element.label}}</label>
-                    <input ng-model="model.test[element.key]" type="{{element.options.type}}"">
-                  </div>
-                </div>
-              </div>
-            </div>
-              
-
             <div class="form-row">
                 <div class="form-group col-md-4">
                   <label for="firstName">First Name</label>
@@ -212,29 +187,8 @@
               <label for="phone">{{phoneType.type}}</label>
               <input type="text" id="phone" class="form-control" ng-model="phoneType.number" disabled>
             </div>
-          
-            <!-- <div class="form-group col-md-6">
-              <label for="fatherPhone">Father phone number</label>
-              <input type="text" id="fatherPhone" class="form-control" placeholder="Father phone number"
-                ng-model="model.loggedMember.member.contact.fatherPhone" disabled>
-            </div> -->
           </div>
           
-          <!-- <div class="form-row">
-          
-            <div class="form-group col-md-6">
-              <label for="motherPhone">Mother phone number</label>
-              <input type="text" id="motherPhone" class="form-control" placeholder="Mother phone number"
-                ng-model="model.loggedMember.member.contact.motherPhone" disabled>
-            </div>
-          
-            <div class="form-group col-md-6">
-              <label for="emergencyPhone">Emergency phone number</label>
-              <input type="text" id="emergencyPhone" class="form-control" placeholder="Emergency phone number"
-                ng-model="model.loggedMember.member.contact.emergency" disabled>
-            </div>
-          </div> -->
-
 
           <hr class="my-4">
           <!-- {{model.eventDetails.specialQGroups}} -->
@@ -274,7 +228,6 @@
               </div>
             </div>
           </div>
-          {{model.SQAnswer}}
           <hr class="my-4">
 
           <hr class="my-4">

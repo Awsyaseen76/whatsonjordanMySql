@@ -7,23 +7,20 @@
 			var model = this;
 			function init(){
 				if(!loggedOrganizer){
-					$location.url('/login')
+					$location.url('/login');
 				}
 				
-
 				model.organizerProfile = loggedOrganizer.chosenRole;
 				model.allRoles = loggedOrganizer.allRoles;
-
-
-				console.log('logged Organizer: ', loggedOrganizer);
 				
+				
+				console.log('logged Organizer: ', loggedOrganizer);
 
 				model.newEventMain = true;
 				model.newAddressAdded = false;
 				model.addressSelected = false;
 				// model.newGeoLocationAdded = false;
 				var organizerId = model.organizerProfile.contact.id;
-				
 				
 				getterService
 					.getEventHelpers(organizerId)

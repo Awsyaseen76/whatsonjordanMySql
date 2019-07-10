@@ -195,17 +195,18 @@
 		return deferred.promise;
 	}
 
-	function isOrganizer(authService, $q, $location){
+	function isOrganizer(authService, $q, $location){	
 		var deferred = $q.defer();
 		authService
 			.checkAuthLogin()
 			.then(function(auth){
-				if(auth === null){
+				console.log('the auth', auth);
+				if(!auth){
 					deferred.reject();
 					$location.url('/login');
-				} else if(auth.chosenRole == 'Organizer'){
+				} else if(auth.chosenRole === 'Organizer'){
 					for (var i in auth.roles) {
-						if (auth.roles[i].name == auth.chosenRole) {
+						if (auth.roles[i].name === auth.chosenRole) {
 							auth.roles[i].email = auth.email;
 							console.log('the chosen role on config: ', auth.roles[i]);
 							deferred.resolve({chosenRole: auth.roles[i], allRoles: auth});

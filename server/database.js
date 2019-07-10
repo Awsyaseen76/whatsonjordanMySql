@@ -119,7 +119,7 @@ db.X_Member_Event.hasMany(db.SQAnswers);
 // db.
 
 
-// set special questio group to event
+// set special question group to event
 db.Event.belongsToMany(db.SpecialQGroup, {through: 'Event_SQGroup'});
 
 

@@ -632,10 +632,10 @@ Special questions:
 		[x] Create Q-Group on the DB
 		[x] Create Questions on the DB also 
 		[x] Link each question with the Q-Group.
-		[] Add the Q-Group ID to the event so it will list the questions to the event.
+		[x] Add the Q-Group ID to the event so it will list the questions to the event.
 
-	2. Choose already added question group:
-		Store the Q-Group ID in the created event then it will list all the questions available for the selected group.
+	2. Choose from already added question groups:
+		[] Store the Q-Group ID in the created event then it will list all the questions available for the selected group.
 
 [x] Member registration for event:
 	1. connect the member with the event through: 
@@ -649,3 +649,6 @@ Special questions:
 [] list registered events on member profile
 	
 
+
+Progbelms:
+[] When organizer create new event the contactId on the event is wrong (it is the id of the contact as a member not an organizer)

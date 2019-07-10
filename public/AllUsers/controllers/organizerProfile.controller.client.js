@@ -20,6 +20,8 @@
 			}
 			
 			model.organizerProfile = loggedOrganizer.chosenRole;
+			console.log(model.organizerProfile);
+			
 			model.allRoles = loggedOrganizer.allRoles;
 			
 			// model.loggedOrganizer = loggedOrganizer;

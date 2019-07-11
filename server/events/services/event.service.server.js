@@ -216,9 +216,6 @@ module.exports = function(app) {
 	function addNewEvent(req, res){
 		var newEvent = req.body;
 		var organizerId = newEvent.organizerId;
-		// newEvent.main.daysPerWeek = JSON.stringify(newEvent.main.daysPerWeek);
-		// newEvent.main.dailyDetails = JSON.stringify(newEvent.main.dailyDetails);
-		// newEvent.main.images = JSON.stringify(newEvent.main.images);
 		newEvent.main.categoryId = newEvent.category.categoryId;
 		newEvent.main.subCategoryId = newEvent.category.subCategoryId;
 		newEvent.main.ageGroupId = newEvent.age.ageGroup.id;
@@ -233,14 +230,16 @@ module.exports = function(app) {
 			newEvent.geoLocation.latitude = JSON.stringify(newEvent.geoLocation.latitude);
 			newEvent.geoLocation.longitude = JSON.stringify(newEvent.geoLocation.longitude);
 		}
-		// console.log('the event to create is: ', newEvent);
-		if (newEvent.specialQuestionsGroups){
+		
+		if (newEvent.specialQuestionsGroups.length > 0 || newEvent.selectedSQGroups.length>0){
+			if (newEvent.specialQuestionsGroups.length > 0){
 				return specialQGroups
 					.addGroup(newEvent.specialQuestionsGroups, organizerId)
 					.then(function(createdGroups){
 						console.log('the created groups: ', createdGroups);
-						// newEvent.main.specialQGroupsIds = createdGroups;
-						// console.log('the final event with groups: ', newEvent);
+						if (newEvent.selectedSQGroups.length > 0){
+							createdGroups = createdGroups.concat(newEvent.selectedSQGroups);
+						}
 						eventsDB
 							.addNewEvent(organizerId, newEvent, createdGroups)
 							.then(function (addedEvent) {
@@ -249,9 +248,7 @@ module.exports = function(app) {
 								return;
 							});
 					});
-					
-				
-			
+			}
 		}else{
 			eventsDB
 				.addNewEvent(organizerId, newEvent)

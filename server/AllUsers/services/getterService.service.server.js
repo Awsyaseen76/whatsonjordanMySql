@@ -10,6 +10,7 @@ module.exports = function (app) {
     var addressesDB = require('../addresses.model.server');
     var schoolsDB = require('../schools.model.server');
     var nationalitiesDB = require('../nationalities.model.server');
+    var specialQGroupDB = require('../specialQGroup.model.server');
 
     // ---------------------------------- APIs requests ----------------------------------
     
@@ -21,6 +22,8 @@ module.exports = function (app) {
     app.get('/api/getterService/getAllGrades', getAllGrades);
     app.get('/api/getterService/getAllExpenseTypes', getAllExpenseTypes);
     app.get('/api/getterService/getPhoneTypes', getPhoneTypes);
+    app.get('/api/getterService/getPhoneTypes', getPhoneTypes);
+    // app.get('/api/getterService/getOrganizerSQGroups', getOrganizerSQGroups);
 
     // ---------------------------------- /APIs requests ----------------------------------
 
@@ -40,8 +43,9 @@ module.exports = function (app) {
     function getEventHelpers(req, res){
         var organizerId = req.params.organizerId;
         var addresses = addressesDB.getOrganizerAddresses(organizerId);
-        
-        var functions = [categories, subCategories, ageGroups, addresses];
+        var sqGroups = specialQGroupDB.getOrganizerSQGroups(organizerId);
+
+        var functions = [categories, subCategories, ageGroups, addresses, sqGroups];
         
         var allResults = [];
         

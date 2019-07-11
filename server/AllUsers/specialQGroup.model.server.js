@@ -6,6 +6,7 @@ db.sequelize.sync();
 module.exports = SpecialQGroup;
 
 SpecialQGroup.addGroup = addGroup;
+SpecialQGroup.getOrganizerSQGroups = getOrganizerSQGroups;
 
 function addGroup(groups, organizerId) {
     return Promise.all(groups.map(function(group){
@@ -23,13 +24,20 @@ function addGroup(groups, organizerId) {
                             createdGroup.addSpecialQuestion(createdQuestion);
                         });
                 }));
-                return createdGroup;
+                return createdGroup.get({plain: true});
             });
     }));
-    
-    // return SpecialQGroup.create(group)
-    //     .then(function (createdGroup) {
-    //         console.log('the created group:', createdGroup);
-    //         return createdGroup.id;
-    //     });
+}
+
+
+function getOrganizerSQGroups(organizerId) {
+    return SpecialQGroup
+                .findAll({ 
+                    where: { organizerId: organizerId},
+                    include: [{ all: true }, {model: SpecialQuestion}]
+                })
+                .then(function(SQGroups){
+                    var allSQGroups = {questionsGroups: SQGroups};
+                    return allSQGroups;
+                });
 }

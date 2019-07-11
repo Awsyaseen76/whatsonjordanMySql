@@ -90,6 +90,7 @@
 			model.addNewQuestionGroup = addNewQuestionGroup;
 			model.specialQGroups = [];
 			model.selectOptionsList = [0];
+			model.selecetedGroups = {};
 
 			function createSpecialQuestions(newEvent){
 				model.newEventProgramDetails = false;
@@ -97,17 +98,12 @@
 				console.log('the received event: ', newEvent);
 			}
 
-		function addNewQuestionGroup(questionsGroup){
-			console.log('the question is', questionsGroup);
-			// for (var i in questionsGroup.questions){
-			// 	if(!questionsGroup.questions[i].required){
-			// 		questionsGroup.questions[i].required = false;
-			// 	}
-			// }
-			model.specialQGroups.push(questionsGroup);
-			console.log('the questions groups list are: ', model.specialQGroups);
-			model.selectOptionsList = [0];
-		}
+			function addNewQuestionGroup(questionsGroup){
+				console.log('the question is', questionsGroup);
+				model.specialQGroups.push(questionsGroup);
+				console.log('the questions groups list are: ', model.specialQGroups);
+				model.selectOptionsList = [0];
+			}
 
 
 			function selectAddress(){
@@ -128,14 +124,11 @@
 				model.mapLocation.longitude = position.coords.longitude;
 				document.getElementById('mapLongitude').value = model.mapLocation.longitude;
 				document.getElementById('mapLatitude').value = model.mapLocation.latitude;
-
 			}
 
 			function getLocationFromMap(){
 				document.getElementById('mapLongitude').value = model.mapLocation.longitude;
 				document.getElementById('mapLatitude').value = model.mapLocation.latitude;
-				// model.newAddressAdded = false;
-				// model.newGeoLocationAdded = true;
 			}
 
 
@@ -143,10 +136,6 @@
 				// create dates based on start-end dates and the days of the weeks
 				var start = new Date(newEvent.main.startingDate);
 				var end = new Date(newEvent.main.expiryDate);
-				// var days = [];
-				// var eventDays = [];
-				
-				
 				
 				// to create event days for the whole event based on days per week
 				for (start; end>start; start.setDate(start.getDate()+1)){
@@ -158,25 +147,15 @@
 						}
 					}
 				}
-				// newEvent.main.daysPerWeek = [];
+				
 				// remove unselected days
 				for (var i in model.daysOfWeek) {
 					if (model.daysOfWeek[i].day == false) {
 						delete (model.daysOfWeek[i]);
-					// }else{
-					// 	// delete (model.daysOfWeek[i].day);
-					// 	newEvent.main.daysPerWeek.push(Number(i));
-					// 	// newEvent.main.daysWithSessions.push()
 					}
-					// var et = Number(i);
-					// var leng = model.daysOfWeek.length - 1;
-					// if(et == leng){
-					// 	newEvent.main.daysPerWeek = model.daysOfWeek;
-					// }
 				}
 				
 				newEvent.main.daysPerWeek = model.daysOfWeek;
-				// newEvent.eventDays = eventDays;
 				newEvent.geoLocation = mapLocation;
 				model.newEvent = newEvent;
 				model.newEventMain = false;
@@ -200,8 +179,21 @@
 						videoLink: model.eventDays[i].dailyDetails ? model.eventDays[i].dailyDetails.videoLink : null,
 					});
 				}
-				
-				// newEvent.newGeoLocationAdded = model.newGeoLocationAdded;
+				newEvent.selectedSQGroups = [];
+				console.log('here', model.selecetedGroups);
+				if(Object.keys(model.selecetedGroups).length>0){
+					for(var g in model.selecetedGroups){
+						if(model.selecetedGroups[g]){
+							for(var c in model.questionsGroups){
+								console.log('are they equal?: ', model.questionsGroups[c].id == g);
+								if(model.questionsGroups[c].id == g){
+									newEvent.selectedSQGroups.push(model.questionsGroups[c]);
+								}
+							}
+						}
+					}
+				}
+
 				console.log('the event to create', newEvent);
 				eventsService
 					.addNewEvent(newEvent)
@@ -224,11 +216,11 @@
 			$location.url(url);
 		}
 
-			function addNewAddress() {
-				console.log('new address added');
-				model.newAddressAdded = true;
-				model.addressSelected = false;
-			}
+		function addNewAddress() {
+			console.log('new address added');
+			model.newAddressAdded = true;
+			model.addressSelected = false;
+		}
 			
 			
 
@@ -237,89 +229,3 @@
 
 
 
-
-
-
-/*
-
-var eventToCreate = {
-    address:{
-            active: null,
-            building: "1",
-            city: "Dabouq",
-            contactId: "0a9d9440-61cd-11e9-b0db-75511edbb6dc",
-            country: "Jordan",
-            createdAt: "2019-04-19T19:34:58.000Z",
-            geoLocation: {
-                createdAt: "2019-04-19T19:34:58.000Z",
-                id: 2,
-                latitude: "31.97650090843871",
-                longitude: "35.83683643263015",
-                updatedAt: "2019-04-19T19:34:58.000Z"
-            },
-            geoLocationId: 2,
-            id: 4,
-            note: null,
-            province: "Amman",
-            street: "Almadina altibbiya",
-            updatedAt: "2019-04-19T19:34:58.000Z",
-        },
-    age:{
-        ageGroup: { id: 2, name: "From 7 to 9", from: 7, to: 9, createdAt: "2019-04-19T14:05:02.000Z", updatedAt: "2019-04-19T14:05:02.000Z"}
-    },
-    category:{
-        categoryId: 2,
-        subCategoryId: 4
-    },
-    programDetails: [
-        {date: "Sat Jun 01 2019", time: { from: 'time', to: 'time' }, dailyDetails: {details: "1", title: "1", videoLink: "1"}},
-        {date: "Sun Jun 02 2019", time: {}, dailyDetails: {}},
-        {date: "Tue Jun 04 2019", time: {}},
-        {date: "Thu Jun 06 2019", time: {}},
-        {date: "Sat Jun 08 2019", time: {}},
-        {date: "Sun Jun 09 2019", time: {}},
-        {date: "Tue Jun 11 2019", time: {}},
-        {date: "Thu Jun 13 2019", time: {}},
-        {date: "Sat Jun 15 2019", time: {}},
-        {date: "Sun Jun 16 2019", time: {}},
-        {date: "Tue Jun 18 2019", time: {}},
-        {date: "Thu Jun 20 2019", time: {}},
-        {date: "Sat Jun 22 2019", time: {}},
-        {date: "Sun Jun 23 2019", time: {}},
-        {date: "Tue Jun 25 2019", time: {}},
-        {date: "Thu Jun 27 2019", time: {}},
-        {date: "Sat Jun 29 2019", time: {}},
-        {date: "Sun Jun 30 2019", time: {}},
-    ],
-    geoLocation:{
-        latitude: 0,
-        longitude: 0
-    },
-    main:{
-        name: "football xxxxxxx",
-        details: "deta",
-        startingDate: 'Sat Jun 01 2019 00:00:00 GMT+0300 (Eastern European Summer Time)',
-        expiryDate: 'Mon Jul 01 2019 00:00:00 GMT+0300 (Eastern European Summer Time)',
-        sessionEndTime: 'Thu Jan 01 1970 01:00:00 GMT+0200 (Eastern European Standard Time)',
-        sessionStartTime: 'Thu Jan 01 1970 01:00:00 GMT+0200 (Eastern European Standard Time)',
-        price: "100",
-        images: {
-            img750x450: "https://s-media-cache-ak0.pinimg.com/originals/11/63/2b/11632b5466b39feef25d992da1d47fd1.jpg",
-            img1200x300: "https://www.i9sportsfranchise.com/wp-content/uploads/2017/02/header25-1200x300.jpg"
-        },
-        termsAndConditions: "tesrm",
-        daysPerWeek: [0, 2, 4, 6],
-        sessionsPerDay:[
-            0: { from: 'Thu Jan 01 1970 01: 00: 00 GMT + 0200(Eastern European Standard Time)', to: 'Thu Jan 01 1970 02: 00: 00 GMT + 0200(Eastern European Standard Time)' },
-            2: { from: 'Thu Jan 01 1970 02: 00: 00 GMT + 0200(Eastern European Standard Time)', to: 'Thu Jan 01 1970 03: 00: 00 GMT + 0200(Eastern European Standard Time)' },
-            4: { from: 'Thu Jan 01 1970 03: 00: 00 GMT + 0200(Eastern European Standard Time)', to: 'Thu Jan 01 1970 04: 00: 00 GMT + 0200(Eastern European Standard Time)' },
-            6: { from: 'Thu Jan 01 1970 04: 00: 00 GMT + 0200(Eastern European Standard Time)', to: 'Thu Jan 01 1970 05: 00: 00 GMT + 0200(Eastern European Standard Time)' },
-        ]
-    },
-    addressSelected: true,
-    newAddressAdded: false,
-    organizerId: "0a9d9440-61cd-11e9-b0db-75511edbb6dc"
-
-}
-
-*/

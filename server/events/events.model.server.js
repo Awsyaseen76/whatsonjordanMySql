@@ -73,14 +73,8 @@ event details:  { name: 'Event 1',
 function addNewEvent(organizerId, event, SQGroups) {
 	console.log('organizerId: ', organizerId);
 	console.log('event.main.contactId: ', event.main.contactId);
-	
-	// event.main.categoryId = event.category.categoryId;
-	// event.main.subCategoryId = event.category.subCategoryId;
-	// event.main.ageGroupId = event.age.ageGroup.id;
-	// // event.main.addressId = event.address.id;
-	// event.main.organizerId = organizerId;
-	
-	console.log('the final event object: ', event);
+	console.log('the whole event is: ', event);
+	console.log('the SQGroups: ', SQGroups);
 	
 	return eventsDB
 		.create(event.main)
@@ -105,7 +99,7 @@ function addNewEvent(organizerId, event, SQGroups) {
 													.then(function(theAddedEvent){
 														if (SQGroups) {
 															return Promise.all(SQGroups.map(function (group) {
-																return theAddedEvent.addSpecialQGroup(group);
+																return theAddedEvent.addSpecialQGroup(group.id);
 															}));
 														}else{
 															return addedEvent.save();
@@ -120,7 +114,7 @@ function addNewEvent(organizerId, event, SQGroups) {
 					.then(function (addedProgramDetails) {
 						if (SQGroups) {
 							return Promise.all(SQGroups.map(function (group) {
-								return addedEvent.addSpecialQGroup(group);
+								return addedEvent.addSpecialQGroup(group.id);
 							}));
 						}else{
 							return addedEvent.save();

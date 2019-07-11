@@ -273,6 +273,7 @@
 
 
 <!--  Program Details -->
+<br>
 <div class="container aws-margin10" ng-show="model.newEventProgramDetails">
 	<div class="row">
 		<div class="col-12">
@@ -303,6 +304,7 @@
 
 
 <!-- Special request info -->
+<br>
 <div class="container aws-margin10" ng-show="model.newEventSpecialQuestions">
 	<div class="row">
 		<div class="col-12">
@@ -312,9 +314,51 @@
 					<fieldset>
 						<legend>Special questions:</legend>
 						<div>
+							
+							<div class="accordion" id="groupsAccordion" ng-repeat="group in model.questionsGroups">
+								<div class="card">
+									<div class="card-header" id="groupHeader{{$index}}" data-toggle="collapse" data-target="#collapseItem{{$index}}" aria-expanded="false" aria-controls="collapseItem{{$index}}">
+										<h4 class="mb-0">
+											<input type="checkbox" name="selectGroup{{$index}}" id="selectGroup{{$index}}" ng-model="model.selecetedGroups[group.id]">
+											{{group.title}}
+										</h4>
+									</div>
+							
+									<div id="collapseItem{{$index}}" class="collapse" aria-labelledby="groupHeader{{$index}}" data-parent="#groupsAccordion">
+										<div class="card-body">
+											<div class="row">
+												<div ng-repeat="question in group.specialQuestions" class="col-md-12">
+													<div ng-switch="question.type" class="form-row" style="padding: 10px;">
+														<div class="col-md-12" ng-switch-when="textbox">
+															<label>{{question.title}}: </label>
+															<input class="form-control" type="{{question.type}}" style="margin-left:20px">
+														</div>
+														<div class="col-md-12" ng-switch-when="select">
+															<label>{{question.title}}: </label>
+															<select class="form-control" style="margin-left:20px" id="select{{$index}}" ng-model="question.value" ng-options="option[$index] as option for option in question.options"></select>
+														</div>
+														<div class="col-md-12" ng-switch-when="checkbox">
+															<label>{{question.title}}</label>
+															<input class="form-control" type="{{question.type}}" style="margin-left:20px">
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<br><br>
+
+							{{model.selecetedGroups}}
+
+							<br><br>
+							
 							<div class="form-row">
 								<a class="btn btn-warning" ng-click="groupToAdd={questions:[]}" data-toggle="modal" data-target="#addQuestionGroup" style="margin-left: 10px;">Add Question Group</a>
 							</div>
+							
+							
 							<!-- Add new question group modal -->
 							<div class="modal fade" id="addQuestionGroup" tabindex="-1" role="dialog" aria-labelledby="newQuestionGroupModalTitle" aria-hidden="true">
 								<div class="modal-dialog modal-dialog-centered modal-lg" role="document">

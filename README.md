@@ -634,8 +634,12 @@ Special questions:
 		[x] Link each question with the Q-Group.
 		[x] Add the Q-Group ID to the event so it will list the questions to the event.
 
-	2. Choose from already added question groups:
-		[] Store the Q-Group ID in the created event then it will list all the questions available for the selected group.
+	2. Choose from already added question groups by the organizer:
+		[x] Bring the Q-Groups including the questions in the created event then it will list all the questions available for the selected group.
+		[x] Show the available groups to select from, store the selected ids on arrary.
+		[x] connect the event with the created and selected special questions groups.
+
+	3. Future: choose from other organizer's SQGroups based on the same event category or subcategory.
 
 [x] Member registration for event:
 	1. connect the member with the event through: 
